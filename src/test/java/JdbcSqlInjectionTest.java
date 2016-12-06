@@ -15,7 +15,6 @@ public class JdbcSqlInjectionTest {
 
 	private static final String connectionUrl = "jdbc:hsqldb:mem://test";
 	private Connection connection;
-	private String injectedSql = "' OR 1=1 UNION SELECT t.TABLE_NAME FROM INFORMATION_SCHEMA.TABLES AS t -- ";
 
 	@Before
 	public void setup() throws SQLException {
