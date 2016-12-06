@@ -30,7 +30,6 @@ public class JdbcSqlInjectionTest {
 	}
 
 	@Test
-	@Ignore
 	public void successfulSqlnjection() throws Exception {
 		// 'normal' query
 		String harmlessSearchPhrase = "Artikel";
