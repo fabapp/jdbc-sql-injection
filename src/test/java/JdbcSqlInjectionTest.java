@@ -15,6 +15,7 @@ public class JdbcSqlInjectionTest {
 
 	private static final String connectionUrl = "jdbc:hsqldb:mem://test";
 	private Connection connection;
+	private String injectedSql = "' OR 1=1 UNION SELECT t.TABLE_NAME FROM INFORMATION_SCHEMA.TABLES AS t -- ";
 
 	@Before
 	public void setup() throws SQLException {
@@ -30,6 +31,7 @@ public class JdbcSqlInjectionTest {
 	}
 
 	@Test
+	@Ignore
 	public void successfulSqlnjection() throws Exception {
 		// 'normal' query
 		String harmlessSearchPhrase = "Artikel";
@@ -54,8 +56,7 @@ public class JdbcSqlInjectionTest {
 		Assert.assertSame(1, extractedData.size());
 
 		// attempt to inject an evil query
-		String evilSql = "' OR 1=1 UNION SELECT t.TABLE_NAME FROM INFORMATION_SCHEMA.TABLES AS t -- ";
-		extractedData = queryWithSafeSql(evilSql);
+		extractedData = queryWithSafeSql(injectedSql);
 		extractedData.stream().forEach(data -> System.out.println(data)); 
 		// nothing will be extracted, sql injection has been prevented
 		Assert.assertTrue(extractedData.isEmpty());
